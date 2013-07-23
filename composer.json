@@ -12,8 +12,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "~2.1",
-        "amenophis/whmcs-connector": "dev-master"
+        "symfony/symfony": "~2.1"
     },
     "minimum-stability": "dev"
 }
