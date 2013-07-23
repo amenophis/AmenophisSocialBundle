@@ -1,0 +1,4 @@
+services:
+    amenophis.social:
+        class: Amenophis\Bundle\SocialBundle\Service\Social
+        arguments: [@doctrine.orm.entity_manager, @security.context]
