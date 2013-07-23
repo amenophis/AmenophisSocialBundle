@@ -1,0 +1,19 @@
+{
+    "name": "amenophis/social-bundle",
+    "description": "Social Bundle for Symfony Framework",
+    "authors": [
+        {
+            "name": "Jérémy LEHERPEUR",
+            "email": "amenophis@leherpeur.net"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Amenophis\\Bundle\\SocialBundle\\": "src/" }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.1",
+        "amenophis/whmcs-connector": "dev-master"
+    },
+    "minimum-stability": "dev"
+}
