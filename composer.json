@@ -8,7 +8,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Amenophis\\Bundle\\SocialBundle\\": "src/" }
+        "psr-0": { "": "src/" }
     },
     "require": {
         "php": ">=5.3.3",
