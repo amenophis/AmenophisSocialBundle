@@ -48,8 +48,14 @@ class Social
         return $this->em->getRepository('AmenophisSocialBundle:Social')->findOneBy(array(
             'class_name' => get_class($item),
             'type' => $type,
-            'item_id' => $item->getId()
+            'item_id' => $item->getId(),
+            'user_id' => $this->getUser()->getId()
         ));
+    }
+
+    public function is($type, $item)
+    {
+        return $this->getSocialItem($type, $item) !== null;
     }
 
     public function add($type, $item)
@@ -82,11 +88,12 @@ class Social
         }
     }
 
-    public function count($type, $className)
+    public function count($type, $item)
     {
         $items = $this->em->getRepository('AmenophisSocialBundle:Social')->findBy(array(
-            'class_name' => $className,
-            'type' => $type
+            'class_name' => get_class($item),
+            'type' => $type,
+            'item_id' => $item->getId()
         ));
 
         return count($items);

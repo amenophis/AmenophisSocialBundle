@@ -2,3 +2,9 @@ services:
     amenophis.social:
         class: Amenophis\Bundle\SocialBundle\Service\Social
         arguments: [@doctrine.orm.entity_manager, @security.context]
+
+    amenophis.social.twig:
+        class: Amenophis\Bundle\SocialBundle\Twig\SocialExtension
+        arguments: [@amenophis.social]
+        tags:
+            - { name: twig.extension }
