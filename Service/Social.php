@@ -4,22 +4,32 @@ namespace Amenophis\Bundle\SocialBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use Amenophis\Bundle\SocialBundle\Event\SocialEvent;
+
 use Amenophis\Bundle\SocialBundle\Exception as Exceptions;
 
 class Social
 {
+    const EVENT_ADD    = 'amenophis_social_add';
+    const EVENT_REMOVE = 'amenophis_social_remove';
+
     /** @var Doctrine\ORM\EntityManager */
     protected $em;
 
     /** @var Symfony\Component\Security\Core\SecurityContext */
     protected $context;
 
+    /** @var Symfony\Component\EventDispatcher\EventDispatcher */
+    protected $dispatcher;
+
     protected $class;
 
-    public function __construct(EntityManager $em, SecurityContext $context, $class)
+    public function __construct(EntityManager $em, SecurityContext $context, EventDispatcher$dispatcher, $class)
     {
         $this->em = $em;
         $this->context = $context;
+        $this->dispatcher = $dispatcher;
         $this->class = $class;
     }
 
@@ -76,6 +86,10 @@ class Social
 
         $this->em->persist($entity);
         $this->em->flush();
+
+        $event = new SocialEvent($entity, SocialEvent::TYPE_ADD);
+        $this->dispatcher->dispatch(self::EVENT_ADD, $event);
+        $this->dispatcher->dispatch(self::EVENT_ADD.'_'.$type, $event);
     }
 
     public function remove($type, $item)
@@ -87,6 +101,9 @@ class Social
         if($entity){
             $this->em->remove($entity);
             $this->em->flush();
+            $event = new SocialEvent($entity, SocialEvent::TYPE_REMOVE);
+            $this->dispatcher->dispatch(self::EVENT_REMOVE, $event);
+            $this->dispatcher->dispatch(self::EVENT_REMOVE.'_'.$type, $event);
         }
     }
 
