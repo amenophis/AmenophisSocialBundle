@@ -2,6 +2,8 @@
 
 namespace Amenophis\Bundle\SocialBundle\DependencyInjection;
 
+
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
@@ -20,10 +22,32 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('amenophis_social');
 
+        $this->addClassesSection($rootNode);
+
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
 
         return $treeBuilder;
+    }
+
+    private function addClassesSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('classes')
+                    ->isRequired()
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('social')
+                            ->addDefaultsIfNotSet()
+                            ->children()
+                                ->scalarNode('model')->isRequired()->cannotBeEmpty()->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
     }
 }

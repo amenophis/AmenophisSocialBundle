@@ -1,24 +1,11 @@
 <?php
 
-namespace Amenophis\Bundle\SocialBundle\Entity;
+namespace Amenophis\Bundle\SocialBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-/**
- * Social
- *
- * @ORM\Table(name="social",
- *     uniqueConstraints={
- *         @ORM\UniqueConstraint(
- *             name="unique_by_type",
- *             columns={"class_name", "type", "item_id", "user_id"}
- *         )
- *     }
- * )
- * @ORM\Entity()
- * @UniqueEntity(fields={"class_name", "type", "item_id", "user_id"}, message="amenophis.social.unique")
- */
+/** @ORM\MappedSuperclass */
 class Social
 {
     /**

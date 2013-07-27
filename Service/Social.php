@@ -4,7 +4,6 @@ namespace Amenophis\Bundle\SocialBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
-use Amenophis\Bundle\SocialBundle\Entity\Social as Entity;
 use Amenophis\Bundle\SocialBundle\Exception as Exceptions;
 
 class Social
@@ -15,10 +14,13 @@ class Social
     /** @var Symfony\Component\Security\Core\SecurityContext */
     protected $context;
 
-    public function __construct(EntityManager $em, SecurityContext $context)
+    protected $class;
+
+    public function __construct(EntityManager $em, SecurityContext $context, $class)
     {
         $this->em = $em;
         $this->context = $context;
+        $this->class = $class;
     }
 
     protected function getUser()
@@ -45,7 +47,7 @@ class Social
 
     protected function getSocialItem($type, $item)
     {
-        return $this->em->getRepository('AmenophisSocialBundle:Social')->findOneBy(array(
+        return $this->em->getRepository($this->class)->findOneBy(array(
             'class_name' => get_class($item),
             'type' => $type,
             'item_id' => $item->getId(),
@@ -66,7 +68,7 @@ class Social
             throw new Exceptions\AlreadySetException('Already Set');
         }
 
-        $entity = new Entity();
+        $entity = new $this->class();
         $entity->setItemId($item->getId());
         $entity->setType($type);
         $entity->setClassName(get_class($item));
@@ -90,7 +92,7 @@ class Social
 
     public function count($type, $item)
     {
-        $items = $this->em->getRepository('AmenophisSocialBundle:Social')->findBy(array(
+        $items = $this->em->getRepository($this->class)->findBy(array(
             'class_name' => get_class($item),
             'type' => $type,
             'item_id' => $item->getId()
