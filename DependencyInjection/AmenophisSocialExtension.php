@@ -25,6 +25,6 @@ class AmenophisSocialExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $container->setParameter('amenophis.entity.social.class', $config['classes']['social']['model']);
+        $container->setParameter('amenophis.social.entity.class', $config['classes']['social']['entity']);
     }
 }

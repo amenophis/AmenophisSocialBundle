@@ -2,11 +2,11 @@
 
 namespace Amenophis\Bundle\SocialBundle\Twig;
 
-use Amenophis\Bundle\SocialBundle\Service\Social;
+use Amenophis\Bundle\SocialBundle\Service\SocialManager;
 
 class SocialExtension extends \Twig_Extension
 {
-    public function __construct(Social $service)
+    public function __construct(SocialManager $service)
     {
         $this->service = $service;
     }

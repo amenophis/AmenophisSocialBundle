@@ -9,7 +9,7 @@ use Amenophis\Bundle\SocialBundle\Event\SocialEvent;
 
 use Amenophis\Bundle\SocialBundle\Exception as Exceptions;
 
-class Social
+class SocialManager
 {
     const EVENT_ADD    = 'amenophis_social_add';
     const EVENT_REMOVE = 'amenophis_social_remove';

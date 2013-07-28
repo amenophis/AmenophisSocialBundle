@@ -24,10 +24,6 @@ class Configuration implements ConfigurationInterface
 
         $this->addClassesSection($rootNode);
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
-
         return $treeBuilder;
     }
 
@@ -42,7 +38,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('social')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('model')->isRequired()->cannotBeEmpty()->end()
+                                ->scalarNode('entity')->isRequired()->cannotBeEmpty()->end()
                             ->end()
                         ->end()
                     ->end()
