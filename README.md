@@ -1,16 +1,18 @@
 AmenophisSocialBundle
-=====================
+=============
 
-    <?php
-    $item = $this->getDoctrine()->getManager()->getRepository('MyBundle:MyEntity')->find(4);
+The AmenophisSocialBundle adds social storage system in Symfony2.
 
-    $service = $this->get('amenophis.social');
+Documentation
+-------------
 
-    //Add
-    $service->add('like', $item);
+The bulk of the documentation is stored in the `Resources/doc/index.md`
+file in this bundle:
 
-    //Remove
-    $service->remove('like', $item);
+[Read the Documentation](https://github.com/amenophis/AmenophisSocialBundle/blob/master/Resources/doc/index.md)
 
-    //Count
-    $count = $service->count('like', get_class($item));
+Installation
+------------
+
+All the installation instructions are located in [documentation](https://github.com/amenophis/AmenophisSocialBundle/blob/master/Resources/doc/index.md).
+
