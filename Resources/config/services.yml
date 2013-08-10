@@ -1,7 +1,7 @@
 services:
     amenophis.social:
-        class: Amenophis\Bundle\SocialBundle\Service\SocialManager
-        arguments: [@doctrine.orm.entity_manager, @security.context, @event_dispatcher, %amenophis.social.entity.class%]
+        class: Amenophis\Bundle\SocialBundle\Manager\SocialManager
+        arguments: [@doctrine.orm.entity_manager, @security.context, @event_dispatcher, @fos_user.user_manager, %amenophis.social.entity.class%]
 
     amenophis.social.twig:
         class: Amenophis\Bundle\SocialBundle\Twig\SocialExtension
