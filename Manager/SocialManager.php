@@ -1,10 +1,11 @@
 <?php
 
-namespace Amenophis\Bundle\SocialBundle\Service;
+namespace Amenophis\Bundle\SocialBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use FOS\UserBundle\Model\UserManagerInterface;
 use Amenophis\Bundle\SocialBundle\Event\SocialEvent;
 
 use Amenophis\Bundle\SocialBundle\Exception as Exceptions;
@@ -23,14 +24,23 @@ class SocialManager
     /** @var Symfony\Component\EventDispatcher\EventDispatcher */
     protected $dispatcher;
 
+    /** @var FOS\UserBundle\Model\UserManagerInterface */
+    protected $user_manager;
+
     protected $class;
 
-    public function __construct(EntityManager $em, SecurityContext $context, EventDispatcher$dispatcher, $class)
+    public function __construct(EntityManager $em, SecurityContext $context, EventDispatcher $dispatcher, UserManagerInterface $user_manager, $class)
     {
         $this->em = $em;
         $this->context = $context;
         $this->dispatcher = $dispatcher;
+        $this->user_manager = $user_manager;
         $this->class = $class;
+    }
+
+    protected function getRepository()
+    {
+        return $this->em->getRepository($this->class);
     }
 
     protected function getUser()
@@ -57,12 +67,12 @@ class SocialManager
 
     protected function getSocialItem($type, $item)
     {
-        return $this->em->getRepository($this->class)->findOneBy(array(
+        return $this->getRepository()->findOneBy([
             'class_name' => get_class($item),
             'type' => $type,
             'item_id' => $item->getId(),
             'user_id' => $this->getUser()->getId()
-        ));
+        ]);
     }
 
     public function is($type, $item)
@@ -109,12 +119,20 @@ class SocialManager
 
     public function count($type, $item)
     {
-        $items = $this->em->getRepository($this->class)->findBy(array(
+        return count($this->related($type, $item));
+    }
+
+    public function related($type, $item)
+    {
+        return $this->getRepository()->findBy([
             'class_name' => get_class($item),
             'type' => $type,
             'item_id' => $item->getId()
-        ));
+        ]);
+    }
 
-        return count($items);
+    public function related_owner($social_item)
+    {
+        return $this->user_manager->findUserBy(['id' => $social_item->getUserId()]);
     }
 }
