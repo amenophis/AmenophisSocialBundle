@@ -3,7 +3,7 @@
 namespace Amenophis\Bundle\SocialBundle\Model;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /** @ORM\MappedSuperclass */
 class Social
@@ -45,7 +45,13 @@ class Social
      */
     protected $user_id;
 
-    /***** Auto Generated *****/
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    protected $created;
 
     /**
      * Get id
@@ -147,5 +153,15 @@ class Social
     public function getUserId()
     {
         return $this->user_id;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 }
