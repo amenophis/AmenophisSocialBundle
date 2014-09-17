@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/amenophis/AmenophisSocialBundle.png?label=ready&title=Ready)](https://waffle.io/amenophis/AmenophisSocialBundle)
 AmenophisSocialBundle
 =============
 
